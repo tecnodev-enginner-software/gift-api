@@ -1,0 +1,8 @@
+#Atualização de pacotes
+`npx npm-check-updates -i`
+
+#EMAIL VIA AZURE
+https://docs.sendgrid.com/for-developers/partners/microsoft-azure-2021#create-a-twilio-sendgrid-account
+
+#STORAGE AZURE
+https://www.npmjs.com/package/adonis-drive-azure-storage
