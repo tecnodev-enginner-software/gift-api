@@ -22,6 +22,7 @@ import LinkToken from './LinkToken'
 import Role from './Role'
 import Permission from './Permission'
 import Profile from './Profile'
+import MusicalGenre from './MusicalGenre'
 
 BaseModel.namingStrategy = new CamelCaseNamingStrategy()
 
@@ -73,6 +74,14 @@ export default class User extends BaseModel {
     foreignKey: 'userId',
   })
   public profile: HasOne<typeof Profile>
+
+  @manyToMany(() => MusicalGenre, {
+    pivotTimestamps: {
+      createdAt: 'created_at',
+      updatedAt: false,
+    },
+  })
+  public musicalGenres: ManyToMany<typeof MusicalGenre>
 
   @manyToMany(() => Role, {
     pivotTimestamps: {
