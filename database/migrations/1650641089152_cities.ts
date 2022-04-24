@@ -6,7 +6,7 @@ export default class Cities extends BaseSchema {
   public async up() {
     this.schema.createTable(this.tableName, (table) => {
       table.string('id', 30).primary()
-      table.string('state_id', 30).references('states.id').nullable()
+      table.string('state_id', 30).references('id').inTable('states').nullable()
       table.string('name')
       table.integer('ibge')
       table.point('geom')

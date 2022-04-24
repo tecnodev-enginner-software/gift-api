@@ -1,5 +1,7 @@
 import type { HttpContextContract } from '@ioc:Adonis/Core/HttpContext'
 
+import BadRequest from 'App/Exceptions/BadRequestException'
+
 import CreateState from 'App/Validators/CreateStateValidator'
 import UpdateState from 'App/Validators/UpdateStateValidator'
 
@@ -45,5 +47,21 @@ export default class StatesController {
     const id = request.param('id')
     const data = await State.findOrFail(id)
     return response.ok({ data })
+  }
+
+  public async destroy({ request, response }: HttpContextContract) {
+    const id = request.param('id')
+    const data = await State.findOrFail(id)
+    await data.loadCount('cities')
+    await data.load('region')
+
+    const cityCount: number = data.$extras.cities_count ?? 0
+
+    if (cityCount > 0) {
+      throw new BadRequest('This state is already being used in another data relationship', 409)
+    }
+
+    await data.delete()
+    return response.noContent()
   }
 }

@@ -1,4 +1,6 @@
 import Factory from '@ioc:Adonis/Lucid/Factory'
+
+import Address from 'App/Models/Address'
 import City from 'App/Models/City'
 import Country from 'App/Models/Country'
 import Modality from 'App/Models/Modality'
@@ -11,9 +13,20 @@ import Role from 'App/Models/Role'
 import State from 'App/Models/State'
 import TextInfo from 'App/Models/TextInfo'
 import User from 'App/Models/User'
+
 import ProfileEnum from 'Contracts/enums/Profile'
 import RoleEnum from 'Contracts/enums/Role'
 import TextInfoEnum from 'Contracts/enums/TextInfo'
+
+export const AddressFactory = Factory.define(Address, ({ faker }) => {
+  return {
+    street: faker.address.streetName(),
+    number: faker.address.zipCodeByState('??'),
+    neighborhood: faker.address.streetAddress(),
+    complement: faker.address.ordinalDirection(),
+    zipCode: faker.address.zipCode(),
+  }
+}).build()
 
 export const CityFactory = Factory.define(City, ({ faker }) => {
   return {

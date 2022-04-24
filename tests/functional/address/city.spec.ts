@@ -1,7 +1,13 @@
 import Database from '@ioc:Adonis/Lucid/Database'
 import { test, TestContext } from '@japa/runner'
 import RoleEnum from 'Contracts/enums/Role'
-import { CityFactory, RoleFactory, StateFactory, UserFactory } from 'Database/factories'
+import {
+  CityFactory,
+  RoleFactory,
+  StateFactory,
+  UserFactory,
+  AddressFactory,
+} from 'Database/factories'
 
 const BASE_URL = `/api/v1`
 
@@ -415,5 +421,38 @@ test.group('City', (group) => {
     assert.equal(last.name, name)
     assert.equal(last.stateId, stateId)
     assert.equal(last.ibge, ibge)
+  })
+
+  test('destroy - it should return 204 in destroy data', async ({ client, assert }) => {
+    const { id } = await CityFactory.create()
+
+    const response = await client
+      .delete(`${BASE_URL}/cities/${id}`)
+      .header('Authorization', `Bearer ${tokenManager}`)
+
+    response.assertStatus(204)
+  })
+
+  test('destroy - it should return 400 in destroy data with relationship', async ({
+    client,
+    assert,
+  }) => {
+    const { id } = await CityFactory.create()
+    await AddressFactory.merge({ cityId: id }).create()
+
+    const response = await client
+      .delete(`${BASE_URL}/cities/${id}`)
+      .header('Authorization', `Bearer ${tokenManager}`)
+
+    response.assertStatus(409)
+
+    const body = response.body()
+
+    assert.exists(body.message)
+    assert.exists(body.code)
+    assert.exists(body.status)
+
+    assert.equal(body.code, 'BAD_REQUEST')
+    assert.equal(body.status, 409)
   })
 })

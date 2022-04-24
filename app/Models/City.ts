@@ -1,7 +1,18 @@
-import { BaseModel, beforeCreate, BelongsTo, belongsTo, column } from '@ioc:Adonis/Lucid/Orm'
+import {
+  BaseModel,
+  beforeCreate,
+  column,
+  HasMany,
+  hasMany,
+  hasOne,
+  HasOne,
+} from '@ioc:Adonis/Lucid/Orm'
 import { DateTime } from 'luxon'
 import { cuid } from '@ioc:Adonis/Core/Helpers'
+
 import CamelCaseNamingStrategy from 'App/Strategies/CamelCaseNamingStrategy'
+
+import Address from 'App/Models/Address'
 import State from 'App/Models/State'
 
 BaseModel.namingStrategy = new CamelCaseNamingStrategy()
@@ -44,10 +55,13 @@ export default class City extends BaseModel {
   @column.dateTime({ autoCreate: true, autoUpdate: true })
   public updatedAt: DateTime
 
-  @belongsTo(() => State, {
+  @hasOne(() => State, {
     foreignKey: 'stateId',
   })
-  public state: BelongsTo<typeof State>
+  public state: HasOne<typeof State>
+
+  @hasMany(() => Address)
+  public addresses: HasMany<typeof Address>
 
   @beforeCreate()
   public static assignCuid(model: City) {

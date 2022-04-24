@@ -1,5 +1,7 @@
 import type { HttpContextContract } from '@ioc:Adonis/Core/HttpContext'
 
+import BadRequest from 'App/Exceptions/BadRequestException'
+
 import CreateCountry from 'App/Validators/CreateCountryValidator'
 import UpdateCountry from 'App/Validators/UpdateCountryValidator'
 
@@ -45,5 +47,20 @@ export default class CountriesController {
     const id = request.param('id')
     const data = await Country.findOrFail(id)
     return response.ok({ data })
+  }
+
+  public async destroy({ request, response }: HttpContextContract) {
+    const id = request.param('id')
+    const data = await Country.findOrFail(id)
+    await data.loadCount('states')
+
+    const count: number = data.$extras.states_count ?? 0
+
+    if (count > 0) {
+      throw new BadRequest('This country is already being used in another data relationship', 409)
+    }
+
+    await data.delete()
+    return response.noContent()
   }
 }
