@@ -44,10 +44,14 @@ export default class UsersController {
 
     switch (accountType) {
       case ProfileEnum.TELENT: {
-        const { fullName } = userCompletePayload
+        const { fullName, musicalGeneres } = userCompletePayload
 
         if (!fullName) {
           throw new BadRequest('name not found', 400)
+        }
+
+        if (!Array.isArray(musicalGeneres) || !musicalGeneres.length) {
+          throw new BadRequest('musical generes not found', 400)
         }
 
         const { firstName, lastName } = splitName(fullName)
@@ -59,6 +63,8 @@ export default class UsersController {
           lastName,
           fullName,
         })
+
+        await user.related('musicalGenres').attach(musicalGeneres)
         break
       }
       case ProfileEnum.CLIENT: {

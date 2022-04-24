@@ -21,6 +21,7 @@ export default class MusicalGenre extends BaseModel {
   public updatedAt: DateTime
 
   @manyToMany(() => User, {
+    pivotTable: 'musical_genre_users',
     pivotTimestamps: {
       createdAt: 'created_at',
       updatedAt: false,

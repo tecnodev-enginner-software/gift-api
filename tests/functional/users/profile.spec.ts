@@ -3,7 +3,7 @@ import { test, TestContext } from '@japa/runner'
 import User from 'App/Models/User'
 import ProfileEnum from 'Contracts/enums/Profile'
 import RoleEnum from 'Contracts/enums/Role'
-import { RoleFactory, UserFactory } from 'Database/factories'
+import { RoleFactory, UserFactory, MusicalGenreFactory } from 'Database/factories'
 
 const BASE_URL = `/api/v1`
 
@@ -55,12 +55,14 @@ test.group('Profile', (group) => {
     client,
     assert,
   }) => {
+    const musicalGenres = await MusicalGenreFactory.createMany(5)
     const userPayload = {
       username: 'test',
       fullName: 'test',
       email: 'test@test.com',
       accountType: ProfileEnum.TELENT,
       password: 'test1234',
+      musicalGeneres: musicalGenres.map((musicalGenre) => musicalGenre.id),
     }
     const response = await client.post(`${BASE_URL}/users`).json(userPayload)
     response.assertStatus(201)
@@ -84,6 +86,7 @@ test.group('Profile', (group) => {
     client,
     assert,
   }) => {
+    const musicalGenres = await MusicalGenreFactory.createMany(5)
     const userPayload = {
       username: 'test',
       email: 'test@test.com',
@@ -91,6 +94,7 @@ test.group('Profile', (group) => {
       password: 'test1234',
       fullName: 'test test@',
       about: 'test test test test',
+      musicalGeneres: musicalGenres.map((musicalGenre) => musicalGenre.id),
     }
     const response = await client.post(`${BASE_URL}/users`).json(userPayload)
     response.assertStatus(201)

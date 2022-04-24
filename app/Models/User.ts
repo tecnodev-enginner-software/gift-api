@@ -76,6 +76,7 @@ export default class User extends BaseModel {
   public profile: HasOne<typeof Profile>
 
   @manyToMany(() => MusicalGenre, {
+    pivotTable: 'musical_genre_users',
     pivotTimestamps: {
       createdAt: 'created_at',
       updatedAt: false,
