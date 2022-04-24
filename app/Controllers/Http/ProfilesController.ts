@@ -32,6 +32,7 @@ export default class ProfilesController {
     }
 
     const profile = await Profile.create({ ...profilePayload, userId })
+    await profile.load('user')
 
     return response.created({ profile })
   }
@@ -52,7 +53,9 @@ export default class ProfilesController {
     }
 
     profile.merge({ about })
+
     await profile.save()
+    await profile.load('user')
 
     return response.created({ profile })
   }

@@ -1,5 +1,6 @@
 import Factory from '@ioc:Adonis/Lucid/Factory'
 
+import Favorite from 'App/Models/Favorite'
 import Address from 'App/Models/Address'
 import City from 'App/Models/City'
 import Country from 'App/Models/Country'
@@ -17,6 +18,10 @@ import User from 'App/Models/User'
 import ProfileEnum from 'Contracts/enums/Profile'
 import RoleEnum from 'Contracts/enums/Role'
 import TextInfoEnum from 'Contracts/enums/TextInfo'
+
+export const FavoriteFactory = Factory.define(Favorite, () => {
+  return {}
+}).build()
 
 export const AddressFactory = Factory.define(Address, ({ faker }) => {
   return {

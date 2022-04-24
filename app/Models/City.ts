@@ -1,11 +1,11 @@
 import {
   BaseModel,
   beforeCreate,
+  BelongsTo,
+  belongsTo,
   column,
   HasMany,
   hasMany,
-  hasOne,
-  HasOne,
 } from '@ioc:Adonis/Lucid/Orm'
 import { DateTime } from 'luxon'
 import { cuid } from '@ioc:Adonis/Core/Helpers'
@@ -22,7 +22,7 @@ export default class City extends BaseModel {
   @column({ isPrimary: true })
   public id: string
 
-  @column({ columnName: 'state_id' })
+  @column({ columnName: 'state_id', serializeAs: null })
   public stateId: string | null
 
   @column()
@@ -55,10 +55,10 @@ export default class City extends BaseModel {
   @column.dateTime({ autoCreate: true, autoUpdate: true })
   public updatedAt: DateTime
 
-  @hasOne(() => State, {
+  @belongsTo(() => State, {
     foreignKey: 'stateId',
   })
-  public state: HasOne<typeof State>
+  public state: BelongsTo<typeof State>
 
   @hasMany(() => Address)
   public addresses: HasMany<typeof Address>

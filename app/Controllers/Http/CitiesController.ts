@@ -13,6 +13,7 @@ export default class CitiesController {
     const limit = 10
 
     const paginate = await City.query()
+      .preload('state')
       .where('name', 'LIKE', `%${term}%`)
       .paginate(page ?? 1, limit)
     return response.ok({ paginate })
@@ -22,13 +23,14 @@ export default class CitiesController {
     const page = request.input('page', 1)
     const limit = 10
 
-    const paginate = await City.query().paginate(page, limit)
+    const paginate = await City.query().preload('state').paginate(page, limit)
     return response.ok({ paginate })
   }
 
   public async store({ request, response }: HttpContextContract) {
     const cityPayload = await request.validate(CreateCity)
     const data = await City.create(cityPayload)
+    await data.load('state')
     return response.created({ data })
   }
 
@@ -39,6 +41,7 @@ export default class CitiesController {
 
     data.merge({ ...cityPayload })
     await data.save()
+    await data.load('state')
 
     return response.ok({ data })
   }

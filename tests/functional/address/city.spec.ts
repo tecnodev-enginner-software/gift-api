@@ -1,5 +1,6 @@
 import Database from '@ioc:Adonis/Lucid/Database'
 import { test, TestContext } from '@japa/runner'
+import City from 'App/Models/City'
 import RoleEnum from 'Contracts/enums/Role'
 import {
   CityFactory,
@@ -81,9 +82,9 @@ test.group('City', (group) => {
     assert.equal(body.data.geom, cityPayload.geom)
     assert.equal(body.data.latitude, cityPayload.latitude)
     assert.equal(body.data.longitude, cityPayload.longitude)
-    assert.equal(body.data.stateId, cityPayload.stateId)
     assert.equal(body.data.codTom, cityPayload.codTom)
     assert.equal(body.data.ibge, cityPayload.ibge)
+    assert.equal(body.data.state.id, cityPayload.stateId)
   })
 
   test('store - it should return 422 when the required data is not provided', async ({
@@ -237,9 +238,9 @@ test.group('City', (group) => {
     assert.equal(body.data.geom, cityPayload.geom)
     assert.equal(body.data.latitude, cityPayload.latitude)
     assert.equal(body.data.longitude, cityPayload.longitude)
-    assert.equal(body.data.stateId, cityPayload.stateId)
     assert.equal(body.data.codTom, cityPayload.codTom)
     assert.equal(body.data.ibge, cityPayload.ibge)
+    assert.equal(body.data.state.id, cityPayload.stateId)
   })
 
   test('update - it should return 422 when the required data is not provided', async ({
@@ -431,6 +432,10 @@ test.group('City', (group) => {
       .header('Authorization', `Bearer ${tokenManager}`)
 
     response.assertStatus(204)
+
+    const city = await City.findBy('id', id)
+
+    assert.isNull(city)
   })
 
   test('destroy - it should return 400 in destroy data with relationship', async ({

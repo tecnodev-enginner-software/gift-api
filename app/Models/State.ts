@@ -6,8 +6,6 @@ import {
   column,
   HasMany,
   hasMany,
-  HasOne,
-  hasOne,
 } from '@ioc:Adonis/Lucid/Orm'
 import { DateTime } from 'luxon'
 import { cuid } from '@ioc:Adonis/Core/Helpers'
@@ -27,10 +25,10 @@ export default class State extends BaseModel {
   @column({ columnName: 'uf' })
   public uf: string
 
-  @column({ columnName: 'country_id' })
+  @column({ columnName: 'country_id', serializeAs: null })
   public countryId: string | null
 
-  @column({ columnName: 'region_id' })
+  @column({ columnName: 'region_id', serializeAs: null })
   public regionId: string | null
 
   @column()
@@ -51,10 +49,10 @@ export default class State extends BaseModel {
   @hasMany(() => City)
   public cities: HasMany<typeof City>
 
-  @hasOne(() => Country, {
+  @belongsTo(() => Country, {
     foreignKey: 'countryId',
   })
-  public country: HasOne<typeof Country>
+  public country: BelongsTo<typeof Country>
 
   @belongsTo(() => Region, {
     foreignKey: 'regionId',

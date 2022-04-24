@@ -1,14 +1,7 @@
 import CamelCaseNamingStrategy from 'App/Strategies/CamelCaseNamingStrategy'
 import ProfileEnum from 'Contracts/enums/Profile'
 
-import {
-  afterFind,
-  BaseModel,
-  beforeCreate,
-  BelongsTo,
-  belongsTo,
-  column,
-} from '@ioc:Adonis/Lucid/Orm'
+import { BaseModel, beforeCreate, BelongsTo, belongsTo, column } from '@ioc:Adonis/Lucid/Orm'
 import { cuid } from '@ioc:Adonis/Core/Helpers'
 import User from './User'
 
@@ -20,7 +13,7 @@ export default class Profile extends BaseModel {
   @column({ isPrimary: true })
   public id: string
 
-  @column({ columnName: 'user_id' })
+  @column({ columnName: 'user_id', serializeAs: null })
   public userId: string
 
   @column({ columnName: 'account_type' })

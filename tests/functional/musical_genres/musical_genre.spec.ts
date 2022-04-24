@@ -288,7 +288,7 @@ test.group('Musical Genre', (group) => {
     assert.equal(body.paginate.data[0].description, description)
   })
 
-  test('show - it should return list with data', async ({ client, assert }) => {
+  test('show - it should return data', async ({ client, assert }) => {
     const { id, description } = await MusicalGenreFactory.create()
     const response = await client.get(`${BASE_URL}/musical-genres/${id}`)
 

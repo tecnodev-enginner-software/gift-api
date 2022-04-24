@@ -13,6 +13,8 @@ export default class StatesController {
     const limit = 10
 
     const paginate = await State.query()
+      .preload('country')
+      .preload('region')
       .where('name', 'LIKE', `%${term}%`)
       .paginate(page ?? 1, limit)
     return response.ok({ paginate })
@@ -22,13 +24,16 @@ export default class StatesController {
     const page = request.input('page', 1)
     const limit = 10
 
-    const paginate = await State.query().paginate(page, limit)
+    const paginate = await State.query().preload('country').preload('region').paginate(page, limit)
     return response.ok({ paginate })
   }
 
   public async store({ request, response }: HttpContextContract) {
     const statePayload = await request.validate(CreateState)
     const data = await State.create(statePayload)
+    await data.load('country')
+    await data.load('region')
+
     return response.created({ data })
   }
 
@@ -39,6 +44,8 @@ export default class StatesController {
 
     data.merge({ ...statePayload })
     await data.save()
+    await data.load('country')
+    await data.load('region')
 
     return response.ok({ data })
   }

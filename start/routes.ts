@@ -151,6 +151,13 @@ Route.group(() => {
           update: [`role:${RoleEnum.MANAGER}`],
           destroy: [`role:${RoleEnum.MANAGER}`],
         })
+
+      Route.resource('/favorites', 'FavoritesController')
+        .only(['update', 'index'])
+        .middleware({
+          index: [`role:${RoleEnum.BASIC}`],
+          update: [`role:${RoleEnum.BASIC}`],
+        })
     }).middleware(['auth'])
   }).prefix('/v1')
 }).prefix('/api')
