@@ -82,8 +82,8 @@ test.group('State', (group) => {
     assert.equal(body.data.uf, statePayload.uf)
     assert.equal(body.data.ddd, statePayload.ddd)
     assert.equal(body.data.ibge, statePayload.ibge)
-    assert.equal(body.data.countryId, statePayload.countryId)
-    assert.equal(body.data.regionId, statePayload.regionId)
+    assert.equal(body.data.country.id, statePayload.countryId)
+    assert.equal(body.data.region.id, statePayload.regionId)
   })
 
   test('store - it should return 422 when the required data is not provided', async ({

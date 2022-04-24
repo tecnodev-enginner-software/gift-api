@@ -13,7 +13,7 @@ export default class Address extends BaseModel {
   @column({ isPrimary: true })
   public id: string
 
-  @column({ columnName: 'city_id' })
+  @column({ columnName: 'city_id', serializeAs: null })
   public cityId: string | null
 
   @column()

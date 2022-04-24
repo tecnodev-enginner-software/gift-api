@@ -134,7 +134,7 @@ test.group('Profile', (group) => {
     assert.exists(body.profile.id, 'Id undefined')
 
     assert.equal(body.profile.accountType, profilePayload.accountType)
-    assert.equal(body.profile.userId, userModelBasic.id)
+    assert.equal(body.profile.user.id, userModelBasic.id)
   })
 
   test('store - it should create profile complete', async ({ client, assert }) => {
@@ -156,7 +156,7 @@ test.group('Profile', (group) => {
 
     assert.equal(body.profile.accountType, profilePayload.accountType)
     assert.equal(body.profile.about, profilePayload.about)
-    assert.equal(body.profile.userId, userModelBasic.id)
+    assert.equal(body.profile.user.id, userModelBasic.id)
   })
 
   test('store - it should return 422 when the required data is not provided', async ({
@@ -280,7 +280,7 @@ test.group('Profile', (group) => {
     const body = response.body()
 
     assert.equal(body.profile.about, profilePayload.about)
-    assert.equal(body.profile.userId, user.id)
+    assert.equal(body.profile.user.id, user.id)
   })
 
   test('update - it should return 400 registration not carried out', async ({ client, assert }) => {
@@ -404,7 +404,7 @@ test.group('Profile', (group) => {
     assert.isNotEmpty(body.paginate.data)
 
     assert.equal(body.paginate.data[0].id, user.profile.id)
-    assert.equal(body.paginate.data[0].userId, user.id)
+    assert.equal(body.paginate.data[0].user.id, user.id)
     assert.equal(body.paginate.data[0].user.fullName, user.fullName)
   })
 })
