@@ -42,6 +42,7 @@ export default class CreateUserValidator {
     accountType: schema.enum(Object.values(ProfileEnum), [rules.required()]),
     documentType: schema.enum.nullableAndOptional(Object.values(DocumentEnum)),
     corporateName: schema.string.nullableAndOptional({ trim: true }, [rules.minLength(3)]),
+    musicalGeneres: schema.array.nullableAndOptional().members(schema.string({ trim: true })),
   })
 
   /**

@@ -7,7 +7,7 @@ import User from 'App/Models/User'
 import LinkTokenEnum from 'Contracts/enums/LinkToken'
 import ProfileEnum from 'Contracts/enums/Profile'
 import RoleEnum from 'Contracts/enums/Role'
-import { RoleFactory, UserFactory } from 'Database/factories'
+import { RoleFactory, UserFactory, MusicalGenreFactory } from 'Database/factories'
 import { DateTime, Duration } from 'luxon'
 
 const BASE_URL = '/api/v1'
@@ -48,12 +48,14 @@ test.group('User', (group) => {
   })
 
   test('store - it should create an talent user of basic type', async ({ client, assert }) => {
+    const musicalGenres = await MusicalGenreFactory.createMany(5)
     const userPayload = {
       username: 'test',
       fullName: 'test',
       email: 'test@test.com',
       accountType: ProfileEnum.TELENT,
       password: 'test1234',
+      musicalGeneres: musicalGenres.map((musicalGenre) => musicalGenre.id),
     }
     const response = await client.post(`${BASE_URL}/users`).json(userPayload)
     response.assertStatus(201)
@@ -70,6 +72,7 @@ test.group('User', (group) => {
   })
 
   test('store - it should create an talent user of complete type', async ({ client, assert }) => {
+    const musicalGenres = await MusicalGenreFactory.createMany(5)
     const userPayload = {
       username: 'test',
       email: 'test@test.com',
@@ -77,6 +80,7 @@ test.group('User', (group) => {
       password: 'test1234',
       fullName: 'test test@',
       about: 'test test test test',
+      musicalGeneres: musicalGenres.map((musicalGenre) => musicalGenre.id),
     }
     const response = await client.post(`${BASE_URL}/users`).json(userPayload)
     response.assertStatus(201)
@@ -377,6 +381,32 @@ test.group('User', (group) => {
     assert.equal(body.status, 400)
   })
 
+  test('store - it should return 400 when musical generes is invalid', async ({
+    client,
+    assert,
+  }) => {
+    const userPayload = {
+      username: 'test',
+      fullName: 'test',
+      email: 'test@test.com',
+      accountType: ProfileEnum.TELENT,
+      password: 'test1234',
+    }
+
+    const response = await client.post(`${BASE_URL}/users`).json(userPayload)
+
+    response.assertStatus(400)
+
+    const body = response.body()
+
+    assert.exists(body.message)
+    assert.exists(body.code)
+    assert.exists(body.status)
+
+    assert.equal(body.code, 'BAD_REQUEST')
+    assert.equal(body.status, 400)
+  })
+
   test('store - it should send email with user activation instructions', async ({
     client,
     assert,
@@ -384,12 +414,15 @@ test.group('User', (group) => {
     const emitter = Event.fake()
     const mailer = Mail.fake()
 
+    const musicalGenres = await MusicalGenreFactory.createMany(5)
+
     const userPayload = {
       username: 'test',
       fullName: 'test',
       email: 'test@test.com',
       accountType: ProfileEnum.TELENT,
       password: 'test1234',
+      musicalGeneres: musicalGenres.map((musicalGenre) => musicalGenre.id),
     }
 
     //INICIO TEST API
@@ -455,12 +488,15 @@ test.group('User', (group) => {
     const emitter = Event.fake()
     const mailer = Mail.fake()
 
+    const musicalGenres = await MusicalGenreFactory.createMany(5)
+
     const userPayload = {
       username: 'test',
       fullName: 'test',
       email: 'test@test.com',
       accountType: ProfileEnum.TELENT,
       password: 'test1234',
+      musicalGeneres: musicalGenres.map((musicalGenre) => musicalGenre.id),
     }
 
     const response = await client.post(`${BASE_URL}/users`).json(userPayload)
