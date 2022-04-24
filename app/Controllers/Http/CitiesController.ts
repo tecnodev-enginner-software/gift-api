@@ -1,5 +1,7 @@
 import type { HttpContextContract } from '@ioc:Adonis/Core/HttpContext'
 
+import BadRequest from 'App/Exceptions/BadRequestException'
+
 import CreateCity from 'App/Validators/CreateCityValidator'
 import UpdateCity from 'App/Validators/UpdateCityValidator'
 
@@ -45,5 +47,20 @@ export default class CitiesController {
     const id = request.param('id')
     const data = await City.findOrFail(id)
     return response.ok({ data })
+  }
+
+  public async destroy({ request, response }: HttpContextContract) {
+    const id = request.param('id')
+    const data = await City.findOrFail(id)
+    await data.loadCount('addresses')
+
+    const count: number = data.$extras.addresses_count ?? 0
+
+    if (count > 0) {
+      throw new BadRequest('This city is already being used in another data relationship', 409)
+    }
+
+    await data.delete()
+    return response.noContent()
   }
 }

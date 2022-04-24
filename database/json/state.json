@@ -1,0 +1,226 @@
+[
+  {
+    "name": "Acre",
+    "uf": "AC",
+    "ibge": 12,
+    "country": "BR",
+    "region": "N",
+    "ddd": "[68]"
+  },
+  {
+    "name": "Alagoas",
+    "uf": "AL",
+    "ibge": 27,
+    "country": "BR",
+    "region": "NE",
+    "ddd": "[82]"
+  },
+  {
+    "name": "Amazonas",
+    "uf": "AM",
+    "ibge": 13,
+    "country": "BR",
+    "region": "N",
+    "ddd": "[97,92]"
+  },
+  {
+    "name": "Amapá",
+    "uf": "AP",
+    "ibge": 16,
+    "country": "BR",
+    "region": "N",
+    "ddd": "[96]"
+  },
+  {
+    "name": "Bahia",
+    "uf": "BA",
+    "ibge": 29,
+    "country": "BR",
+    "region": "NE",
+    "ddd": "[77,75,73,74,71]"
+  },
+  {
+    "name": "Ceará",
+    "uf": "CE",
+    "ibge": 23,
+    "country": "BR",
+    "region": "NE",
+    "ddd": "[88,85]"
+  },
+  {
+    "name": "Distrito Federal",
+    "uf": "DF",
+    "ibge": 53,
+    "country": "BR",
+    "region": "CO",
+    "ddd": "[61]"
+  },
+  {
+    "name": "Espírito Santo",
+    "uf": "ES",
+    "ibge": 32,
+    "country": "BR",
+    "region": "SE",
+    "ddd": "[28,27]"
+  },
+  {
+    "name": "Goiás",
+    "uf": "GO",
+    "ibge": 52,
+    "country": "BR",
+    "region": "CO",
+    "ddd": "[62,64,61]"
+  },
+  {
+    "name": "Maranhão",
+    "uf": "MA",
+    "ibge": 21,
+    "country": "BR",
+    "region": "NE",
+    "ddd": "[99,98]"
+  },
+  {
+    "name": "Minas Gerais",
+    "uf": "MG",
+    "ibge": 31,
+    "country": "BR",
+    "region": "SE",
+    "ddd": "[34,37,31,33,35,38,32]"
+  },
+  {
+    "name": "Mato Grosso do Sul",
+    "uf": "MS",
+    "ibge": 50,
+    "country": "BR",
+    "region": "CO",
+    "ddd": "[67]"
+  },
+  {
+    "name": "Mato Grosso",
+    "uf": "MT",
+    "ibge": 51,
+    "country": "BR",
+    "region": "CO",
+    "ddd": "[65,66]"
+  },
+  {
+    "name": "Pará",
+    "uf": "PA",
+    "ibge": 15,
+    "country": "BR",
+    "region": "N",
+    "ddd": "[91,94,93]"
+  },
+  {
+    "name": "Paraíba",
+    "uf": "PB",
+    "ibge": 25,
+    "country": "BR",
+    "region": "NE",
+    "ddd": "[83]"
+  },
+  {
+    "name": "Pernambuco",
+    "uf": "PE",
+    "ibge": 26,
+    "country": "BR",
+    "region": "NE",
+    "ddd": "[81,87]"
+  },
+  {
+    "name": "Piauí",
+    "uf": "PI",
+    "ibge": 22,
+    "country": "BR",
+    "region": "NE",
+    "ddd": "[89,86]"
+  },
+  {
+    "name": "Paraná",
+    "uf": "PR",
+    "ibge": 41,
+    "country": "BR",
+    "region": "S",
+    "ddd": "[43,41,42,44,45,46]"
+  },
+  {
+    "name": "Rio de Janeiro",
+    "uf": "RJ",
+    "ibge": 33,
+    "country": "BR",
+    "region": "SE",
+    "ddd": "[24,22,21]"
+  },
+  {
+    "name": "Rio Grande do Norte",
+    "uf": "RN",
+    "ibge": 24,
+    "country": "BR",
+    "region": "NE",
+    "ddd": "[84]"
+  },
+  {
+    "name": "Rondônia",
+    "uf": "RO",
+    "ibge": 11,
+    "country": "BR",
+    "region": "N",
+    "ddd": "[69]"
+  },
+  {
+    "name": "Roraima",
+    "uf": "RR",
+    "ibge": 14,
+    "country": "BR",
+    "region": "N",
+    "ddd": "[95]"
+  },
+  {
+    "name": "Rio Grande do Sul",
+    "uf": "RS",
+    "ibge": 43,
+    "country": "BR",
+    "region": "S",
+    "ddd": "[53,54,55,51]"
+  },
+  {
+    "name": "Santa Catarina",
+    "uf": "SC",
+    "ibge": 42,
+    "country": "BR",
+    "region": "S",
+    "ddd": "[47,48,49]"
+  },
+  {
+    "name": "Sergipe",
+    "uf": "SE",
+    "ibge": 28,
+    "country": "BR",
+    "region": "NE",
+    "ddd": "[79]"
+  },
+  {
+    "name": "São Paulo",
+    "uf": "SP",
+    "ibge": 35,
+    "country": "BR",
+    "region": "SE",
+    "ddd": "[11,12,13,14,15,16,17,18,19]"
+  },
+  {
+    "name": "Tocantins",
+    "uf": "TO",
+    "ibge": 17,
+    "country": "BR",
+    "region": "N",
+    "ddd": "[63]"
+  },
+  {
+    "name": "Exterior",
+    "uf": "EX",
+    "ibge": 99,
+    "country": null,
+    "region": null,
+    "ddd": null
+  }
+]
