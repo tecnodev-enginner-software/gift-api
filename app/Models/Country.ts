@@ -1,12 +1,4 @@
-import {
-  BaseModel,
-  beforeCreate,
-  BelongsTo,
-  belongsTo,
-  column,
-  HasMany,
-  hasMany,
-} from '@ioc:Adonis/Lucid/Orm'
+import { BaseModel, beforeCreate, column, HasMany, hasMany } from '@ioc:Adonis/Lucid/Orm'
 import { DateTime } from 'luxon'
 import { cuid } from '@ioc:Adonis/Core/Helpers'
 import CamelCaseNamingStrategy from 'App/Strategies/CamelCaseNamingStrategy'
