@@ -99,6 +99,9 @@ export default class UsersController {
           fullName: corporateName,
         })
 
+        await user
+          .related('documents')
+          .updateOrCreate({ userId: user.id }, { code: document, documentType })
         break
       }
       default:
