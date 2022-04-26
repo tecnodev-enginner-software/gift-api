@@ -158,6 +158,15 @@ Route.group(() => {
           index: [`role:${RoleEnum.BASIC}`],
           update: [`role:${RoleEnum.BASIC}`],
         })
+
+      Route.resource('/notifications', 'NotificationsController')
+        .only(['store', 'create', 'index', 'update'])
+        .middleware({
+          create: [`role:${RoleEnum.MANAGER}`],
+          store: [`role:${RoleEnum.BASIC}`],
+          index: [`role:${RoleEnum.BASIC}`],
+          update: [`role:${RoleEnum.BASIC}`],
+        })
     }).middleware(['auth'])
   }).prefix('/v1')
 }).prefix('/api')

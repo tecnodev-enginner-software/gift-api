@@ -18,6 +18,8 @@ import { cuid } from '@ioc:Adonis/Core/Helpers'
 import CamelCaseNamingStrategy from 'App/Strategies/CamelCaseNamingStrategy'
 import Hash from '@ioc:Adonis/Core/Hash'
 
+import NotificationToken from './NotificationToken'
+import Notification from './Notification'
 import LinkToken from './LinkToken'
 import Role from './Role'
 import Permission from './Permission'
@@ -70,6 +72,16 @@ export default class User extends BaseModel {
     foreignKey: 'userId',
   })
   public tokens: HasMany<typeof LinkToken>
+
+  @hasMany(() => NotificationToken, {
+    foreignKey: 'userId',
+  })
+  public notificationTokens: HasMany<typeof NotificationToken>
+
+  @hasMany(() => Notification, {
+    foreignKey: 'userId',
+  })
+  public notifications: HasMany<typeof Notification>
 
   @hasMany(() => Document, {
     foreignKey: 'userId',

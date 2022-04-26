@@ -28,5 +28,6 @@ declare module '@ioc:Adonis/Core/Event' {
   interface EventsList {
     'new:user': { email: string; token: string; fullName: string }
     'forgot:password': { email: string; token: string; fullName: string }
+    'notification:created': { title: string; text: string }
   }
 }
