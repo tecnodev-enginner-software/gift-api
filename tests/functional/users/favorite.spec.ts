@@ -1,12 +1,9 @@
 import Database from '@ioc:Adonis/Lucid/Database'
-
-import { RoleFactory, FavoriteFactory, UserFactory } from 'Database/factories'
-
-import RoleEnum from 'Contracts/enums/Role'
-
 import { test, TestContext } from '@japa/runner'
-import User from 'App/Models/User'
 import Favorite from 'App/Models/Favorite'
+import User from 'App/Models/User'
+import RoleEnum from 'Contracts/enums/Role'
+import { FavoriteFactory, RoleFactory, UserFactory } from 'Database/factories'
 
 const BASE_URL = `/api/v1`
 

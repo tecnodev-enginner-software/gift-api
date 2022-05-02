@@ -1,23 +1,46 @@
+/*
+  Factories
+*/
 import Factory from '@ioc:Adonis/Lucid/Factory'
-
-import Favorite from 'App/Models/Favorite'
+/*
+  Models
+*/
 import Address from 'App/Models/Address'
 import City from 'App/Models/City'
 import Country from 'App/Models/Country'
-import Modality from 'App/Models/Modality'
 import EventSize from 'App/Models/EventSize'
 import EventType from 'App/Models/EventType'
+import Favorite from 'App/Models/Favorite'
+import Modality from 'App/Models/Modality'
 import MusicalGenre from 'App/Models/MusicalGenre'
+import Notification from 'App/Models/Notification'
 import Profile from 'App/Models/Profile'
 import Region from 'App/Models/Region'
 import Role from 'App/Models/Role'
 import State from 'App/Models/State'
 import TextInfo from 'App/Models/TextInfo'
 import User from 'App/Models/User'
-
+/*
+  Enums
+*/
+import NotificationEnum from 'Contracts/enums/Notification'
 import ProfileEnum from 'Contracts/enums/Profile'
 import RoleEnum from 'Contracts/enums/Role'
 import TextInfoEnum from 'Contracts/enums/TextInfo'
+
+export const NotificationFactory = Factory.define(Notification, ({ faker }) => {
+  const role = RoleEnum[faker.random.arrayElement(Object.values(RoleEnum)) ?? RoleEnum.BASIC]
+  const notification: NotificationEnum =
+    faker.random.arrayElement(Object.values(NotificationEnum)) ?? NotificationEnum.DEFAULT
+
+  return {
+    title: faker.lorem.words(5),
+    text: faker.lorem.paragraph(),
+    check: faker.datatype.boolean(),
+    roleType: role,
+    notificationType: notification,
+  }
+}).build()
 
 export const FavoriteFactory = Factory.define(Favorite, () => {
   return {}

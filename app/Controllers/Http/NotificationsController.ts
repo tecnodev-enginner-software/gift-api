@@ -13,6 +13,7 @@ import { ModelPaginatorContract } from '@ioc:Adonis/Lucid/Orm'
 
 export default class NotificationsController {
   public async create({ request, response }: HttpContextContract) {
+    //CREATE NOTIFICATION
     return response.noContent()
   }
 
@@ -35,6 +36,7 @@ export default class NotificationsController {
   }
 
   public async update({ request, response, auth }: HttpContextContract) {
+    //UPDATE CHECK NOTIFICATION
     return response.noContent()
   }
 
@@ -59,6 +61,7 @@ export default class NotificationsController {
     if (countRole < RoleEnum.MANAGER) {
       paginate = await Notification.query()
         .where('userId', user.id)
+        .where('roleType', RoleEnum[countRole])
         .orderBy('created_at', 'desc')
         .paginate(page, limit)
     } else {

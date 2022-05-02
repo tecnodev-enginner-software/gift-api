@@ -1,12 +1,10 @@
-import { BaseModel, beforeCreate, BelongsTo, belongsTo, column } from '@ioc:Adonis/Lucid/Orm'
-import { DateTime } from 'luxon'
 import { cuid } from '@ioc:Adonis/Core/Helpers'
-import CamelCaseNamingStrategy from 'App/Strategies/CamelCaseNamingStrategy'
-
+import { BaseModel, beforeCreate, belongsTo, BelongsTo, column } from '@ioc:Adonis/Lucid/Orm'
 import User from 'App/Models/User'
-
-import RoleEnum from 'Contracts/enums/Role'
+import CamelCaseNamingStrategy from 'App/Strategies/CamelCaseNamingStrategy'
 import NotificationEnum from 'Contracts/enums/Notification'
+import RoleEnum from 'Contracts/enums/Role'
+import { DateTime } from 'luxon'
 
 BaseModel.namingStrategy = new CamelCaseNamingStrategy()
 export default class Notification extends BaseModel {
