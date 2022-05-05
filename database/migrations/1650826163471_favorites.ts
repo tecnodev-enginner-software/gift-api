@@ -1,10 +1,11 @@
 import BaseSchema from '@ioc:Adonis/Lucid/Schema'
 
-export default class RoleUsers extends BaseSchema {
-  protected tableName = 'role_user'
+export default class Favorites extends BaseSchema {
+  protected tableName = 'favorites'
 
   public async up() {
     this.schema.createTable(this.tableName, (table) => {
+      table.string('id', 30).primary()
       table
         .string('user_id', 30)
         .references('id')
@@ -12,12 +13,12 @@ export default class RoleUsers extends BaseSchema {
         .onDelete('CASCADE')
         .notNullable()
       table
-        .string('role_id', 30)
+        .string('favorited_id', 30)
         .references('id')
-        .inTable('roles')
+        .inTable('users')
         .onDelete('CASCADE')
         .notNullable()
-      table.unique(['user_id', 'role_id'])
+      table.unique(['user_id', 'favorited_id'])
 
       /**
        * Uses timestamptz for PostgreSQL and DATETIME2 for MSSQL

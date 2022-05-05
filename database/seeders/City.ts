@@ -12,9 +12,14 @@ export default class CitySeeder extends BaseSeeder {
       const states = await State.all()
 
       const contents = await Drive.get(path)
-      const object = JSON.parse(contents.toString())
-      for (const item of object) {
-        await City.create({ ...item, stateId: states.find((state) => state.uf === item.state)?.id })
+      const listJson = JSON.parse(contents.toString())
+      for (const item of listJson) {
+        await City.updateOrCreate(
+          {
+            ibge: item.ibge,
+          },
+          { ...item, stateId: states.find((state) => state.uf === item.state)?.id }
+        )
       }
     }
   }

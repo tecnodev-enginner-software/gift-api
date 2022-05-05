@@ -117,36 +117,46 @@ Route.group(() => {
         `role:${RoleEnum.MANAGER}`
       )
       Route.resource('/countries', 'CountriesController')
-        .only(['store', 'update', 'show', 'index'])
+        .only(['store', 'update', 'show', 'index', 'destroy'])
         .middleware({
           index: [`role:${RoleEnum.MANAGER}`],
           store: [`role:${RoleEnum.MANAGER}`],
           show: [`role:${RoleEnum.MANAGER}`],
           update: [`role:${RoleEnum.MANAGER}`],
+          destroy: [`role:${RoleEnum.MANAGER}`],
         })
 
       Route.get('/states/search/:term', 'StatesController.search').middleware(
         `role:${RoleEnum.MANAGER}`
       )
       Route.resource('/states', 'StatesController')
-        .only(['store', 'update', 'show', 'index'])
+        .only(['store', 'update', 'show', 'index', 'destroy'])
         .middleware({
           index: [`role:${RoleEnum.MANAGER}`],
           store: [`role:${RoleEnum.MANAGER}`],
           show: [`role:${RoleEnum.MANAGER}`],
           update: [`role:${RoleEnum.MANAGER}`],
+          destroy: [`role:${RoleEnum.MANAGER}`],
         })
 
       Route.get('/cities/search/:term', 'CitiesController.search').middleware(
         `role:${RoleEnum.MANAGER}`
       )
       Route.resource('/cities', 'CitiesController')
-        .only(['store', 'update', 'show', 'index'])
+        .only(['store', 'update', 'show', 'index', 'destroy'])
         .middleware({
           index: [`role:${RoleEnum.MANAGER}`],
           store: [`role:${RoleEnum.MANAGER}`],
           show: [`role:${RoleEnum.MANAGER}`],
           update: [`role:${RoleEnum.MANAGER}`],
+          destroy: [`role:${RoleEnum.MANAGER}`],
+        })
+
+      Route.resource('/favorites', 'FavoritesController')
+        .only(['update', 'index'])
+        .middleware({
+          index: [`role:${RoleEnum.BASIC}`],
+          update: [`role:${RoleEnum.BASIC}`],
         })
     }).middleware(['auth'])
   }).prefix('/v1')

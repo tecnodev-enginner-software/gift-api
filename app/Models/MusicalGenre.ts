@@ -1,7 +1,8 @@
-import { BaseModel, beforeCreate, column } from '@ioc:Adonis/Lucid/Orm'
+import { BaseModel, beforeCreate, column, ManyToMany, manyToMany } from '@ioc:Adonis/Lucid/Orm'
 import { DateTime } from 'luxon'
 import { cuid } from '@ioc:Adonis/Core/Helpers'
 import CamelCaseNamingStrategy from 'App/Strategies/CamelCaseNamingStrategy'
+import User from './User'
 
 BaseModel.namingStrategy = new CamelCaseNamingStrategy()
 export default class MusicalGenre extends BaseModel {
@@ -19,8 +20,17 @@ export default class MusicalGenre extends BaseModel {
   @column.dateTime({ autoCreate: true, autoUpdate: true })
   public updatedAt: DateTime
 
+  @manyToMany(() => User, {
+    pivotTable: 'musical_genre_users',
+    pivotTimestamps: {
+      createdAt: 'created_at',
+      updatedAt: false,
+    },
+  })
+  public users: ManyToMany<typeof User>
+
   @beforeCreate()
-  public static assignCuid(musical: MusicalGenre) {
-    musical.id = cuid()
+  public static assignCuid(model: MusicalGenre) {
+    model.id = cuid()
   }
 }

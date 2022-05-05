@@ -1,7 +1,14 @@
 import Database from '@ioc:Adonis/Lucid/Database'
 import { test, TestContext } from '@japa/runner'
 import RoleEnum from 'Contracts/enums/Role'
-import { CountryFactory, RegionFactory, RoleFactory, StateFactory, UserFactory } from 'Database/factories'
+import {
+  CountryFactory,
+  CityFactory,
+  RegionFactory,
+  RoleFactory,
+  StateFactory,
+  UserFactory,
+} from 'Database/factories'
 
 const BASE_URL = `/api/v1`
 
@@ -75,8 +82,8 @@ test.group('State', (group) => {
     assert.equal(body.data.uf, statePayload.uf)
     assert.equal(body.data.ddd, statePayload.ddd)
     assert.equal(body.data.ibge, statePayload.ibge)
-    assert.equal(body.data.countryId, statePayload.countryId)
-    assert.equal(body.data.regionId, statePayload.regionId)
+    assert.equal(body.data.country.id, statePayload.countryId)
+    assert.equal(body.data.region.id, statePayload.regionId)
   })
 
   test('store - it should return 422 when the required data is not provided', async ({
@@ -557,5 +564,40 @@ test.group('State', (group) => {
     assert.equal(last.regionId, regionId)
     assert.equal(last.ddd, ddd)
     assert.equal(last.ibge, ibge)
+  })
+
+  test('destroy - it should return 204 in destroy data', async ({ client, assert }) => {
+    const region = await RegionFactory.create()
+    const { id } = await StateFactory.merge({ regionId: region.id }).create()
+
+    const response = await client
+      .delete(`${BASE_URL}/states/${id}`)
+      .header('Authorization', `Bearer ${tokenManager}`)
+
+    response.assertStatus(204)
+  })
+
+  test('destroy - it should return 400 in destroy data with relationship', async ({
+    client,
+    assert,
+  }) => {
+    const region = await RegionFactory.create()
+    const { id } = await StateFactory.merge({ regionId: region.id }).create()
+    await CityFactory.merge({ stateId: id }).create()
+
+    const response = await client
+      .delete(`${BASE_URL}/states/${id}`)
+      .header('Authorization', `Bearer ${tokenManager}`)
+
+    response.assertStatus(409)
+
+    const body = response.body()
+
+    assert.exists(body.message)
+    assert.exists(body.code)
+    assert.exists(body.status)
+
+    assert.equal(body.code, 'BAD_REQUEST')
+    assert.equal(body.status, 409)
   })
 })

@@ -1,13 +1,12 @@
 import { BaseModel, beforeCreate, BelongsTo, belongsTo, column } from '@ioc:Adonis/Lucid/Orm'
+import DocumentEnum from 'Contracts/enums/Document'
 import { DateTime } from 'luxon'
 import { cuid } from '@ioc:Adonis/Core/Helpers'
-
-import User from './User'
-import LinkTokenEnum from 'Contracts/enums/LinkToken'
 import CamelCaseNamingStrategy from 'App/Strategies/CamelCaseNamingStrategy'
+import User from 'App/Models/User'
 
 BaseModel.namingStrategy = new CamelCaseNamingStrategy()
-export default class LinkToken extends BaseModel {
+export default class Document extends BaseModel {
   public static selfAssignPrimaryKey = true
 
   @column({ isPrimary: true })
@@ -16,11 +15,11 @@ export default class LinkToken extends BaseModel {
   @column({ columnName: 'user_id', serializeAs: null })
   public userId: string
 
-  @column()
-  public token: string
+  @column({ columnName: 'document_type' })
+  public documentType: DocumentEnum
 
-  @column({ columnName: 'type' })
-  public type: LinkTokenEnum
+  @column()
+  public code: string
 
   @column.dateTime({ autoCreate: true })
   public createdAt: DateTime
@@ -34,7 +33,7 @@ export default class LinkToken extends BaseModel {
   public user: BelongsTo<typeof User>
 
   @beforeCreate()
-  public static assignCuid(link: LinkToken) {
-    link.id = cuid()
+  public static assignCuid(model: Document) {
+    model.id = cuid()
   }
 }

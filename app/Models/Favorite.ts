@@ -1,40 +1,38 @@
-import { BaseModel, beforeCreate, BelongsTo, belongsTo, column } from '@ioc:Adonis/Lucid/Orm'
 import { DateTime } from 'luxon'
+import { BaseModel, beforeCreate, BelongsTo, belongsTo, column } from '@ioc:Adonis/Lucid/Orm'
 import { cuid } from '@ioc:Adonis/Core/Helpers'
 
-import User from './User'
-import LinkTokenEnum from 'Contracts/enums/LinkToken'
 import CamelCaseNamingStrategy from 'App/Strategies/CamelCaseNamingStrategy'
+import User from './User'
 
 BaseModel.namingStrategy = new CamelCaseNamingStrategy()
-export default class LinkToken extends BaseModel {
+export default class Favorite extends BaseModel {
   public static selfAssignPrimaryKey = true
 
-  @column({ isPrimary: true })
+  @column({ isPrimary: true, serializeAs: null })
   public id: string
 
   @column({ columnName: 'user_id', serializeAs: null })
   public userId: string
 
-  @column()
-  public token: string
-
-  @column({ columnName: 'type' })
-  public type: LinkTokenEnum
+  @column({ columnName: 'favorited_id', serializeAs: null })
+  public favoritedId: string
 
   @column.dateTime({ autoCreate: true })
   public createdAt: DateTime
-
-  @column.dateTime({ autoCreate: true, autoUpdate: true })
-  public updatedAt: DateTime
 
   @belongsTo(() => User, {
     foreignKey: 'userId',
   })
   public user: BelongsTo<typeof User>
 
+  @belongsTo(() => User, {
+    foreignKey: 'favoritedId',
+  })
+  public favorited: BelongsTo<typeof User>
+
   @beforeCreate()
-  public static assignCuid(link: LinkToken) {
-    link.id = cuid()
+  public static assignCuid(model: Favorite) {
+    model.id = cuid()
   }
 }
